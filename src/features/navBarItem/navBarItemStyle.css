@@ -1,0 +1,55 @@
+.navBarItem {
+        
+    border-style: solid;
+    border-width: 1px;
+
+    width: auto;
+    height: 40px;
+
+    display: flex;
+
+    background-color: #dbd6c4;
+
+    align-items: center;
+    margin-bottom: 3px;
+
+    
+}
+
+.navBarItemBinBtn {
+    background-color: #dbd6c4;
+
+    border-style: none;
+
+    height: 100%;
+    width: 20%;   
+    left: 100%; 
+}
+.binImg {    
+    vertical-align: middle;   
+    
+    width: 90%;
+    height: 90%;
+
+    
+}
+
+.navBarItemLabel {
+    /* display: inline-block; */
+    line-height: 240%;
+
+    border-style: none;
+    width: 100%;
+    
+    /* text-align-last: justify; */
+    text-align-last:center;
+    
+    margin-right: 5%;
+    /* /* margin-left: 2%; */
+    /* margin-left: 5%; */
+    /* margin-top: 2%;
+    margin-bottom: 2%; */
+    
+    background-color: #dbd6c4;
+    
+}

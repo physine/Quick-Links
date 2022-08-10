@@ -1,0 +1,13 @@
+.navBarList {
+    height: 84%;
+    /* width: 100%; */
+
+    background-color: #7E7C7F;
+
+}
+
+.scroll {
+    /* min-height: 100%; */
+    overflow-x:hidden;
+    overflow-y:auto;
+}

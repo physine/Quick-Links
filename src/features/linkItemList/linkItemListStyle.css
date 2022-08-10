@@ -1,0 +1,12 @@
+.linkItemList {
+    height: 84%;
+
+    
+    background-color: #a0a0a0;
+}
+
+.scroll {
+    /* min-height: 100%; */
+    overflow-x:hidden;
+    overflow-y:auto;
+}

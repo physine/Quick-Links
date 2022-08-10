@@ -1,0 +1,19 @@
+.linkItemSearchLable {
+    margin-left: 2%;
+       
+}
+
+.linkItemFavBtn {
+    margin-left: .5%;
+    width: 4%;
+    height: 80%;
+
+    border-style: none;
+}
+
+.img {
+    vertical-align: middle;   
+    
+    width: 90%;
+    height: 90%;
+}
