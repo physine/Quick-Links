@@ -1,2 +1,1 @@
-"# quickLinks" 
-"# quick-links" 
+"# quickLinks"
