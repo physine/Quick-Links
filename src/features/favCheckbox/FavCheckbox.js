@@ -18,12 +18,12 @@ const FavCheckbox = () => {
 
     return (
         <div className='linkItemSearchLable'>
-            {/* <label>favorites only</label> */}
-            {/* <input onChange={toggleDisplayFavHandler} className='linkItemSearchFavToggle' type='checkbox'></input>   */}
+            <label>favorites only:</label>
+            <input onChange={toggleDisplayFavHandler} className='linkItemSearchFavToggle' type='checkbox'></input>
 
-            <button onClick={toggleDisplayFavHandler} className='linkItemFavBtn'>
+            {/* <button onClick={toggleDisplayFavHandler} className='linkItemFavBtn'>
                 <img className='img' src={isAllFavs ? goldStarImg : hollowStarImg} alt='' />  
-            </button>
+            </button> */}
         </div>
     )
 }

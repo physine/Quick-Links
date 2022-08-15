@@ -66,3 +66,34 @@ export const applyNavBarListFilters = (navBarList, navBarSearch) => {
     }
     return navBarList    
 }
+
+export const islocalStorageEmpty = () => {
+    let localStorageState = localStorage.getItem('navBarList')
+    // console.log('localStorageState: '+localStorageState)
+    if(null === localStorageState){
+        return true
+    }
+    return false
+}
+
+export const localStorageState = () => {    
+    let navBarList = JSON.parse(localStorage.getItem('navBarList'))    
+    console.log(navBarList)
+    //console.log(navBarList)
+    navBarList[0].isSelected = true
+    return navBarList
+}
+
+export const falsifyFocus = (state) => {
+    //let navBarList = [...state] // copy array
+    //let navBarListCopy = state.slice()
+    let navBarListCopy = JSON.parse(JSON.stringify(state))
+    for(let navItem=0; navItem<navBarListCopy.length; ++navItem){
+        //navBarList[navItem].isSelected = false
+        for(let linkItem=0; linkItem<navBarListCopy[navItem].length; ++linkItem){
+            navBarListCopy[navItem].linkItemList[linkItem].isInFocus = false
+            navBarListCopy[navItem].linkItemList[linkItem].isInFocusNote = false
+        }
+    }
+    return navBarListCopy
+}

@@ -4,12 +4,15 @@ import {
     newKey,
     applyLinkListFilters,
     applyNavBarListFilters,
+    islocalStorageEmpty,
+    localStorageState,
+    falsifyFocus,
 } from '../../utils'
 
 // =============== Slice Object ===============
 export const navBarSlice = createSlice({
     name:'navBarList',
-    initialState:[],
+    initialState: islocalStorageEmpty() ? [] : localStorageState(), // initialState: islocalStorageEmpty() ? [] : getLocalStorageState() ,
     reducers:{
         forceItemListStateChange:(state, action) => {
             for(let i=0; i<state.length; ++i)
@@ -29,27 +32,36 @@ export const navBarSlice = createSlice({
                 toggleRender:false,
                 linkItemList:[],                
             })
+
+            localStorage.removeItem('navBarList')
+            let stateCopy = [...state] 
+            localStorage.setItem('navBarList', JSON.stringify(falsifyFocus(stateCopy)))
         },        
-        // navItemKey
-        // title
-        // isSelected
-        // linkItemList
 
         deleteNavItem:(state, action) => {
-            if(state.length === 1)
+            if(state.length === 1){
+                localStorage.removeItem('navBarList')                
                 return []
+            }
 
             // index of navItem to delete
             let removeIndex
+            let newState
             for(let i=0; i<state.length; ++i){
                 if(action.payload === state[i].navItemKey){
                     removeIndex = i
-                    return [
+                    newState = [
                         ...state.slice(0, removeIndex),
                         ...state.slice(removeIndex+1, state.length)
                     ]   
                 }
-            }                      
+            }
+                        
+            localStorage.removeItem('navBarList')
+            let stateCopy = [...newState] 
+            localStorage.setItem('navBarList', JSON.stringify(falsifyFocus(stateCopy)))
+
+            return newState
         },
 
         toggleIsSelected:(state, action) => {
@@ -78,14 +90,11 @@ export const navBarSlice = createSlice({
                         note:''
                     })                    
                 }                
-            }            
-                // navItemKey
-                // title (nav bar display text)  
-                // sub list of urls
-                    // linkItemKey
-                    // url
-                    // isFav
+            }
 
+            localStorage.removeItem('navBarList')
+            let stateCopy = [...state] 
+            localStorage.setItem('navBarList', JSON.stringify(falsifyFocus(stateCopy)))
         },
         updateLinkItemUrl:(state, action) => {
             for(let i=0; i<state.length; ++i){
@@ -97,6 +106,11 @@ export const navBarSlice = createSlice({
                     }
                 }
             }
+
+            // localStorage.removeItem('navBarList')
+            // let stateCopy = [...state] 
+            // localStorage.setItem('navBarList', JSON.stringify(falsifyFocus(stateCopy)))
+
             return state
         },
         updateLinkItemNote:(state, action) => {
@@ -109,6 +123,11 @@ export const navBarSlice = createSlice({
                     }
                 }
             }
+
+            // localStorage.removeItem('navBarList')
+            // let stateCopy = [...state] 
+            // localStorage.setItem('navBarList', JSON.stringify(falsifyFocus(stateCopy)))
+
             return state
         },
         deleteLinkItem:(state, action) => {
@@ -127,9 +146,9 @@ export const navBarSlice = createSlice({
             }
             
             let navItem = state[navItemIndex]            
-            let linkItemList = state[navItemIndex].linkItemList   
+            let linkItemList = state[navItemIndex].linkItemList              
 
-            return [
+            let newState = [
                 ...state.slice(0, navItemIndex),
                 {
                     navItemKey: navItem.navItemKey,
@@ -143,11 +162,15 @@ export const navBarSlice = createSlice({
                 },                
                 ...state.slice(navItemIndex+1, state.length)
             ]
-        },
 
-        // toggleDisplayFav:(state, action) => {
-        //     state.
-        // },
+            localStorage.removeItem('navBarList')
+            let stateCopy = [...newState] 
+            localStorage.setItem('navBarList', JSON.stringify(falsifyFocus(stateCopy)))
+
+            return newState 
+
+            
+        },
 
         toggleFav:(state, action) => {
             let navItemIndex
@@ -168,7 +191,7 @@ export const navBarSlice = createSlice({
             let linkItemList = state[navItemIndex].linkItemList   
             let linkItem = linkItemList[linkItemIndex]
 
-            return [
+            let newState = [
                 ...state.slice(0, navItemIndex),
                 {             
                     navItemKey: navItem.navItemKey,
@@ -190,6 +213,12 @@ export const navBarSlice = createSlice({
                 },                
                 ...state.slice(navItemIndex+1, state.length)
             ]
+
+            localStorage.removeItem('navBarList')
+            let stateCopy = [...newState] 
+            localStorage.setItem('navBarList', JSON.stringify(falsifyFocus(stateCopy)))
+
+            return newState
         },
 
         toggleFocusUrl:(state, action) => {
@@ -211,7 +240,7 @@ export const navBarSlice = createSlice({
             let linkItemList = state[navItemIndex].linkItemList   
             let linkItem = linkItemList[linkItemIndex]
 
-            return [
+            let newState = [
                 ...state.slice(0, navItemIndex),
                 {
                     navItemKey: navItem.navItemKey,
@@ -233,6 +262,14 @@ export const navBarSlice = createSlice({
                 },                
                 ...state.slice(navItemIndex+1, state.length)
             ]
+
+            if(!newState[navItemIndex].linkItemList[linkItemIndex].isInFocusNote){
+                localStorage.removeItem('navBarList')
+                let stateCopy = [...newState] 
+                localStorage.setItem('navBarList', JSON.stringify(falsifyFocus(stateCopy)))
+            }
+
+            return newState
         },
 
         toggleFocusNote:(state, action) => {
@@ -254,7 +291,7 @@ export const navBarSlice = createSlice({
             let linkItemList = state[navItemIndex].linkItemList   
             let linkItem = linkItemList[linkItemIndex]
 
-            return [
+            let newState = [
                 ...state.slice(0, navItemIndex),
                 {
                     navItemKey: navItem.navItemKey,
@@ -276,6 +313,14 @@ export const navBarSlice = createSlice({
                 },                
                 ...state.slice(navItemIndex+1, state.length)
             ]
+
+            if(!newState[navItemIndex].linkItemList[linkItemIndex].isInFocusNote){
+                localStorage.removeItem('navBarList')
+                let stateCopy = [...newState] 
+                localStorage.setItem('navBarList', JSON.stringify(falsifyFocus(stateCopy)))
+            }
+
+            return newState
         }
     }
 })
@@ -298,7 +343,6 @@ export const selectFocusedUrlText = state => {
         if(state[i].isSelected){
             for(let j=0; j<state[i].linkItemList.length; ++j){
                 if(state[i].linkItemList[j].isInFocus){
-                    console.log('link: '+state[i].linkItemList[j].url)
                     return state[i].linkItemList[j].url
                 }
             }
@@ -311,7 +355,6 @@ export const selectFocusedNote = state => {
         if(state[i].isSelected){
             for(let j=0; j<state[i].linkItemList.length; ++j){
                 if(state[i].linkItemList[j].isInFocusNote){
-                    console.log('link: '+state[i].linkItemList[j].note)
                     return state[i].linkItemList[j].note
                 }
             }

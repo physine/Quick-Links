@@ -8,7 +8,7 @@ import '../navBarList/navBarListStyle.css'
 
 const NavBarList = () => {
   const navBarList = useSelector(selectNavBarList)
-  
+
   return (
     <div className='navBarList scroll'>
       {navBarList?.map(navItem => (     
